@@ -23,9 +23,11 @@ group :assets do
 end
 
 group :development, :test do
-  #gem 'rspec-rails', '~> 2.4'
   gem 'rspec-rails', '2.11.0'
   gem 'guard-rspec', '1.2.1'
+  gem 'wdm', '~>0.1'
+  gem 'guard-spork'
+  gem 'spork', '0.9.2'
 end
 
 
@@ -37,4 +39,5 @@ group :test do
   gem 'rb-fchange', '0.0.5'
   gem 'rb-notifu', '0.0.4'
   gem 'win32console', '1.3.0'
+
 end
