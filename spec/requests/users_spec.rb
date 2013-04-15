@@ -39,7 +39,7 @@ describe 'Users' do
         fill_in "Name",         with: "Example User"
         fill_in "Email",        with: "user@example.com"
         fill_in "Password",     with: "foobar"
-        fill_in "Confirmation", with: "foobar"
+        fill_in "user_password_confirmation", with: "foobar"
       end
 
       it "should create a user" do
