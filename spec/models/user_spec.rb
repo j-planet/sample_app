@@ -19,10 +19,10 @@ describe User do
 
   it { should respond_to(:name) }
   it { should respond_to(:email) }
-  it { should_respond_to(:password_digest) }
-  it { should_respond_to(:password) }
-  it { should_respond_to(:password_confirmation) }
-  it { should_respond_to(:authenticate) }
+  it { should respond_to(:password_digest) }
+  it { should respond_to(:password) }
+  it { should respond_to(:password_confirmation) }
+  it { should respond_to(:authenticate) }
 
   it {should be_valid}
 
@@ -107,5 +107,17 @@ describe User do
     before { @user.password = @user.password_confirmation = "aaaaa" }
     it { should be_invalid}
   end
+
+  describe "email address with mixed case" do
+    let(:mixed_case_email) { "Foo@ExAMPle.CoM"}
+
+    it "should be saved as all lower-case" do
+      @user.email = mixed_case_email
+      @user.save
+      @user.reload.email.should == mixed_case_email.downcase
+    end
+  end
+
+
 
 end
