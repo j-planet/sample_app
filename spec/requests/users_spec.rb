@@ -42,6 +42,16 @@ describe 'Users' do
         fill_in "user_password_confirmation", with: "foobar"
       end
 
+      describe "home page should no longer have a sign up button" do
+        before {
+          click_button submit
+          visit root_path
+        }
+
+        it { should_not have_selector('input', value:"Sign up now!") }
+
+      end
+
       it "should create a user" do
         expect { click_button submit}.to change(User, :count).by(1)
       end
@@ -52,7 +62,17 @@ describe 'Users' do
 
         it { should have_selector('title', text: user.name) }
         it { should have_selector('div.alert.alert-success', text:'Welcome')}
+        it { should have_link('Sign out') }
       end
+
+      describe "followed by signout" do
+        before {
+          click_button submit
+          click_link 'Sign out'
+        }
+        it { should have_link('Sign in')}
+      end
+
     end
   end
 
