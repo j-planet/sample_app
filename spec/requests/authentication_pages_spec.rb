@@ -32,6 +32,8 @@ describe "Authentication" do
       before { sign_in user}
 
       it { should have_selector('title', text: user.name) }
+
+      it { should have_link('Users', href: users_path) }
       it { should have_link('Profile', href: user_path(user)) }
       it { should have_link('Settings')}
       it { should have_link('Sign out', href: signout_path) }
@@ -62,9 +64,14 @@ describe "Authentication" do
       
     describe "in the users controller" do
 
+      describe "visiting the user index" do
+        before { visit users_path }
+        it { should have_selector('title', text: 'Sign in') }
+      end
+
       describe "visiting the edit page" do
         before { visit edit_user_path(user) }
-        it { should have_selector('title', text: "sign in") }
+        it { should have_selector('title', text: "Sign in") }
       end
 
       describe "submitting to the update action" do
@@ -77,6 +84,7 @@ describe "Authentication" do
     describe "as wrong user" do
       let(:user) { FactoryGirl.create(:user) }
       let(:wrong_user) { FactoryGirl.create(:user, email:"wrong@example.com") }
+      before { visit signin_path }
       before { sign_in user }
 
       describe "visiting User#edit page" do
@@ -86,7 +94,7 @@ describe "Authentication" do
 
       describe "submitting a PUT request to the Users#update action" do
         before { put user_path(wrong_user) }
-        specify { response.should redirect_to(Root_path) }
+        specify { response.should redirect_to(root_path) }
       end
     end
   end
