@@ -16,6 +16,14 @@ describe 'Users' do
     it { should have_selector('title', text: 'All users') }
     it { should have_selector('h1', text: 'All users') }
 
+    describe "accessible attributes" do
+      it "should not allow access to admin" do
+        expect do
+          User.new(name:'blah', email:'blah@blah.com', password:'j'*6, password_confirmation:'j'*6, admin:true)
+        end.to raise_error(ActiveModel::MassAssignmentSecurity::Error)
+      end
+    end
+
     describe "pagination" do
 
       before(:all) { 15.times { FactoryGirl.create(:user) } }
