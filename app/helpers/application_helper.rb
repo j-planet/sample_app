@@ -12,4 +12,9 @@ module ApplicationHelper
     end
   end
 
+  def pluralize_without_count(count, singular)
+    if count > 0
+      count == 1 ? singular : singular.pluralize
+    end
+  end
 end

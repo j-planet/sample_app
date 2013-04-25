@@ -9,15 +9,25 @@ SampleApp::Application.routes.draw do
   match '/signup', to: 'users#new'
 
   # users
-  resources :users
+  SampleApp::Application.routes.draw do
+    resources :users do
+      member do
+        get :following, :followers
+      end
+    end
+
+    resources :sessions, only: [:new, :create, :destroy]
+    resources :microposts, only: [:create, :destroy]
+    resources :relationships, only: [:create, :destroy]
+  end
 
   # sessions
-  resources :sessions, only: [:new, :create, :destroy]
+  #resources :sessions, only: [:new, :create, :destroy]
   match '/signin', to: 'sessions#new'
   match '/signout', to: 'sessions#destroy', via: :delete
 
   # microposts
-  resources :microposts, only: [:create, :destroy]
+  #resources :microposts, only: [:create, :destroy]
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
